@@ -40,7 +40,27 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'drones',
+    'django_filters',
+    #Token authentication
+    'rest_framework.authtoken',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS':
+    #default pagination class
+    #'rest_framework.pagination.LimitOffsetPagination',
+    'drones.custompagination.LimitOffsetPaginationWithUpperBound',    
+    'PAGE_SIZE': 4,
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.OrderingFilter',
+        'rest_framework.filters.SearchFilter',
+        ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
